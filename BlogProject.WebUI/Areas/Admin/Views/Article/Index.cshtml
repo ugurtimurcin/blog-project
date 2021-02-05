@@ -1,0 +1,43 @@
+﻿@model List<ArticleListDto>
+
+<h4 class="display-4 text-center my-4">Articles</h4>
+
+@if (Model.Count > 0)
+{
+    <a asp-area="Admin" asp-controller="Article" asp-action="Add" class="btn btn-info btn-sm">Add New Article</a>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Posted Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model)
+            {
+                <tr>
+                    <td>@article.Id</td>
+                    <td>
+                        <img src="~/img/article-cover/@article.ImagePath" style="width: 100px; height: 80px" />
+                    </td>
+                    <td>@article.Title</td>
+                    <td>@article.PostedTime.ToString("d")</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Article" asp-action="Edit" asp-route-id="@article.Id" class="btn btn-outline-warning btn-sm">Edit</a>
+                        <a asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-id="@article.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center">
+        <p class="text-muted">There is no article yet.</p>
+        <a asp-area="Admin" asp-controller="Article" asp-action="Add" class="btn btn-info btn-sm">Add New Article</a>
+    </div>
+}

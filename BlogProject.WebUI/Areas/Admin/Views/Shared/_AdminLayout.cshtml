@@ -1,0 +1,87 @@
+﻿@{ var active = string.Empty;
+                if (TempData["Active"] != null)
+                {
+                    active = TempData["Active"].ToString();
+                } }
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/css/dashboard-bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/css/dashboard-simple-sidebar.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    @RenderSection("CSS", false)
+
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class=" border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading text-danger my-5"><i class="fas fa-tachometer-alt mr-2"></i>Admin Dashboard</div>
+            <div class="list-group list-group-flush">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="border-bottom list-group-item list-group-item-action @(active == "home" ? "active":"")">
+                    <i class="fas fa-home mr-2"></i>Home
+                </a>
+                <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="border-bottom list-group-item list-group-item-action @(active == "category" ? "active":"")">
+                    <i class="fas fa-list-ul mr-2"></i>Categories
+                </a>
+                <a asp-area="Admin" asp-controller="Article" asp-action="Index" class="border-bottom list-group-item list-group-item-action @(active == "article" ? "active":"")">
+                    <i class="fas fa-pen-nib mr-2"></i>Articles
+                </a>
+                <a asp-area="Admin" asp-controller="Profile" asp-action="Index" class="border-bottom list-group-item list-group-item-action @(active == "category" ? "active":"")">
+                    <i class="fas fa-user-alt mr-2"></i>Profile
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-align-justify"></i></button>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+            </nav>
+
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", false)
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });</script>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@4.6.0",
+      "destination": "wwwroot/lib/twitter-bootstrap/",
+      "files": [
+        "css/bootstrap.min.css.map",
+        "css/bootstrap.min.css",
+        "js/bootstrap.min.js",
+        "js/bootstrap.min.js.map",
+        "js/bootstrap.bundle.min.js",
+        "js/bootstrap.bundle.min.js.map"
+      ]
+    },
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery",
+      "files": [ "jquery.min.js", "jquery.min.map" ]
+    },
+    {
+      "library": "jquery-validate@1.19.2",
+      "destination": "wwwroot/lib/jquery-validate",
+      "files": [ "jquery.validate.min.js" ]
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive",
+      "files": [ "jquery.validate.unobtrusive.min.js" ]
+    },
+    {
+      "library": "font-awesome@5.15.2",
+      "destination": "wwwroot/lib/font-awesome",
+      "files": [ "css/all.min.css", "webfonts/fa-solid-900.woff", "webfonts/fa-solid-900.woff2", "webfonts/fa-solid-900.ttf" ]
+    },
+    {
+      "library": "ckeditor5@25.0.0",
+      "destination": "wwwroot/lib/ckeditor",
+      "files": ["ckeditor.js", "ckeditor.js.map"]
+    }
+  ]
+}

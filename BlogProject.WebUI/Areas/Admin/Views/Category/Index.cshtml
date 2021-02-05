@@ -1,0 +1,36 @@
+﻿@model List<CategoryListDto>
+
+<h4 class="display-4 text-center my-4">Categories</h4>
+@if (Model.Count > 0)
+{
+    <a class="btn btn-info btn-sm" asp-area="Admin" asp-controller="Category" asp-action="Add">Add New Category</a>
+    <table class="table table-hover w-50 table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Category Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.Id</td>
+                    <td>@category.Name</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center">
+        <p class="text-muted text-center">There is no category yet. </p>
+        <a class="btn btn-info btn-sm" asp-area="Admin" asp-controller="Category" asp-action="Add">Add New Category</a>
+    </div>
+}

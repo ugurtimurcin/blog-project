@@ -1,0 +1,73 @@
+﻿@model AppUserLoginDto
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <!--Made with love by Mutiullah Samim -->
+    <!--Bootsrap 4 CDN-->
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!--Fontawesome CDN-->
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="~/css/login-page.css">
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Sign In</h3>
+                    @*<div class="d-flex justify-content-end social_icon">
+                        <span><i class="fab fa-facebook-square"></i></span>
+                        <span><i class="fab fa-google-plus-square"></i></span>
+                        <span><i class="fab fa-twitter-square"></i></span>
+                    </div>*@
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                            <input type="text" class="form-control" asp-for="Email" placeholder="E-Mail">
+
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                        <div class="row align-items-end float-right pr-3 remember">
+                            <input type="checkbox" asp-for="RememberMe">Remember Me
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mt-2 row justify-content-center ">
+                            <button type="submit" class="btn login_btn mr-3">Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Don't have an account?<a href="#">Sign Up</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="#">Forgot your password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
