@@ -1,0 +1,55 @@
+﻿@model AppUserListDto
+
+
+
+
+<h4 class="text-center display-4">Profile</h4>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
+        @TempData["Success"].ToString()
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+
+
+<table class="table table-borderless shadow table-hover w-50 mx-auto">
+
+    <tr>
+        <td>Profile Picture</td>
+        <th><img src="~/img/profile-picture/@Model.ProfilPicture" style="width: 100px; height: 100px;" /></th>
+    </tr>
+
+    <tr>
+        <td>First Name</td>
+        <th>@Model.FirstName</th>
+    </tr>
+
+    <tr>
+        <td>Last Name</td>
+        <th>@Model.LastName</th>
+    </tr>
+    <tr>
+        <td>User Name</td>
+        <th>@Model.UserName</th>
+    </tr>
+
+    <tr>
+        <td>E-mail</td>
+        <th>@Model.Email</th>
+    </tr>
+</table>
+
+<div class="justify-content-center text-center">
+    <a asp-area="Admin" asp-controller="Profile" asp-action="Edit" class="btn btn-outline-info">Update Profile</a>
+    <a asp-area="Admin" asp-controller="Profile" asp-action="Password" class="btn btn-outline-warning">Change Password</a>
+</div>
+
+
+
+
+
