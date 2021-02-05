@@ -1,8 +1,8 @@
 ﻿@{ var active = string.Empty;
-                if (TempData["Active"] != null)
-                {
-                    active = TempData["Active"].ToString();
-                } }
+    if (TempData["Active"] != null)
+    {
+        active = TempData["Active"].ToString();
+    } }
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +42,7 @@
                 <a asp-area="Admin" asp-controller="Article" asp-action="Index" class="border-bottom list-group-item list-group-item-action @(active == "article" ? "active":"")">
                     <i class="fas fa-pen-nib mr-2"></i>Articles
                 </a>
-                <a asp-area="Admin" asp-controller="Profile" asp-action="Index" class="border-bottom list-group-item list-group-item-action @(active == "category" ? "active":"")">
+                <a asp-area="Admin" asp-controller="Profile" asp-action="Index" class="border-bottom list-group-item list-group-item-action @(active == "profile" ? "active":"")">
                     <i class="fas fa-user-alt mr-2"></i>Profile
                 </a>
             </div>
