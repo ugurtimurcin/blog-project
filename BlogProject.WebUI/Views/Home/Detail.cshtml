@@ -1,51 +1,85 @@
-﻿@model ArticleListDto
+﻿@model CommentAddDto
+<!-- Title -->
+<h1 class="mt-4">@ViewBag.Article.Title</h1>
 
-    <!-- Title -->
-    <h1 class="mt-4">@Model.Title</h1>
+<!-- Author -->
+<p class="lead">
+    by
+    <a href="#">Start Bootstrap</a>
+</p>
 
-    <!-- Author -->
-    <p class="lead">
-        by
-        <a href="#">Start Bootstrap</a>
-    </p>
+<hr>
 
-    <hr>
+<!-- Date/Time -->
+<p>Posted on @ViewBag.Article.PostedTime</p>
 
-    <!-- Date/Time -->
-    <p>Posted on @Model.PostedTime</p>
+<hr>
 
-    <hr>
+<!-- Preview Image -->
+<img class="img-fluid rounded" src="~/img/article-cover/@ViewBag.Article.ImagePath" alt="">
 
-    <!-- Preview Image -->
-    <img class="img-fluid rounded" src="~/img/article-cover/@Model.ImagePath" alt="">
+<hr>
 
-    <hr>
+<!-- Post Content -->
+<div class="text-justify">
+    @Html.Raw(ViewBag.Article.Content)
+</div>
 
-    <!-- Post Content -->
-    <div class="text-justify">
-        @Html.Raw(Model.Content)
-    </div>
+<hr>
 
-    <hr>
-
-    <!-- Comments Form -->
-    <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
-        <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <textarea class="form-control" rows="3"></textarea>
+<!-- Comments Form -->
+<div class="card my-4">
+    <h5 class="card-header">Leave a Comment:</h5>
+    <div class="card-body">
+        <form id="commentForm" asp-controller="Home" asp-action="AddComment" method="post">
+            <input type="hidden" asp-for="ArticleId" value="@ViewBag.Article.Id" />
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <input class="form-control" asp-for="Firstname" placeholder="First Name" />
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
+                <div class="col-sm-6">
+                    <input class="form-control" asp-for="Lastname" placeholder="Last Name" />
+                </div>
+            </div>
 
+            <div class="form-group">
+                <textarea class="form-control" rows="3" asp-for="Content"></textarea>
+            </div>
+            <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+@foreach (var comment in ViewBag.Article.Comments)
+{
     <!-- Single Comment -->
     <div class="media mb-4">
         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
         <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            <h5 class="mt-0">@comment.Firstname @comment.Lastname</h5>
+            @comment.Content
         </div>
     </div>
+}
+
+@*@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var articleId = @ViewBag.Article.Id;
+            console.log(articleId);
+
+            $('#btnSubmit').click(function () {
+                    var firstName = $("#FirstName").val();
+
+                $.ajax({
+                    type: 'post',
+                    url: '@this.Url.Action("AddComment","Home")',
+                    data: {ArticleId: articleId },                    
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8;'
+                });
+            });
+        });
+    </script>
+}*@

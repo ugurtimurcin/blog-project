@@ -1,5 +1,6 @@
 ﻿using BlogProject.Business.Abstract;
 using BlogProject.DTO.Concrete.ArticleDTOs;
+using BlogProject.DTO.Concrete.CommentDTOs;
 using BlogProject.Entities.Concrete;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
@@ -12,21 +13,32 @@ namespace BlogProject.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IGenericService<Article> _genericService;
-        public HomeController(IGenericService<Article> genericService)
+        private readonly IGenericService<Comment> _genericService;
+        private readonly IArticleService _articleService;
+        public HomeController(IGenericService<Comment> genericService, IArticleService articleService)
         {
             _genericService = genericService;
+            _articleService = articleService;
         }
         public async Task<IActionResult> Index()
         {
-            var articles = await _genericService.GetAllAsync(x => x.Id);
+            var articles = await _articleService.GetAllAsync(x => x.Id);
             return View(articles.Adapt<List<ArticleListDto>>());
         }
 
         public async Task<IActionResult> Detail(int id)
         {
-            var article = await _genericService.GetByIdAsync(id);
-            return View(article.Adapt<ArticleListDto>());
+            ViewBag.Article = await _articleService.GetArticleWithCommentsByIdAsync(id);
+           
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(CommentAddDto model)
+        {
+            await _genericService.AddAsync(model.Adapt<Comment>());
+            return RedirectToAction("Detail","Home",new { id = model.ArticleId });
         }
     }
 }

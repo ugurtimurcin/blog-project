@@ -12,7 +12,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\img\profile-picture\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\theme\startbootstrap-simple-sidebar-gh-pages\css\" />

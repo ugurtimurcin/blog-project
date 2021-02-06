@@ -11,7 +11,7 @@ namespace BlogProject.Entities.Concrete
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Content { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } 
 
         public int ArticleId { get; set; }
         public Article Article { get; set; }
