@@ -9,5 +9,6 @@ namespace BlogProject.DataAccess.Abstract
 {
     public interface IArticleDal : IGenericDal<Article>
     {
+        Task<Article> GetArticleWithCommentsByIdAsync(int id);
     }
 }

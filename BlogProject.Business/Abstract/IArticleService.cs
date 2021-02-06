@@ -9,5 +9,6 @@ namespace BlogProject.Business.Abstract
 {
     public interface IArticleService : IGenericService<Article>
     {
+        Task<Article> GetArticleWithCommentsByIdAsync(int id);
     }
 }
