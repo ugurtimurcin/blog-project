@@ -22,6 +22,9 @@ namespace BlogProject.Business.Dependencies.MicrosoftIoC
             services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
 
+            services.AddScoped<IArticleService, ArticleManager>();
+            services.AddScoped<IArticleDal, EfArticleRepository>();
+
             services.AddDbContext<BlogContext>();
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<BlogContext>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
 
