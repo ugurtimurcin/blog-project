@@ -16,7 +16,7 @@
 <hr>
 
 <!-- Preview Image -->
-<img class="img-fluid rounded" src="~/img/article-cover/@ViewBag.Article.ImagePath" alt="">
+<img class="img-fluid rounded" style="width:45rem; height: 28rem;" src="~/img/article-cover/@ViewBag.Article.ImagePath" alt="">
 
 <hr>
 
@@ -53,33 +53,36 @@
 @foreach (var comment in ViewBag.Article.Comments)
 {
     <!-- Single Comment -->
-    <div class="media mb-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-        <div class="media-body">
-            <h5 class="mt-0">@comment.Firstname @comment.Lastname</h5>
-            @comment.Content
+    @if (comment.IsActive)
+    {
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">@comment.Firstname @comment.Lastname</h5>
+                @comment.Content
+            </div>
         </div>
-    </div>
+    }
 }
 
 @*@section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
+        <script type="text/javascript">
+            $(document).ready(function () {
 
-            var articleId = @ViewBag.Article.Id;
-            console.log(articleId);
+                var articleId = @ViewBag.Article.Id;
+                console.log(articleId);
 
-            $('#btnSubmit').click(function () {
-                    var firstName = $("#FirstName").val();
+                $('#btnSubmit').click(function () {
+                        var firstName = $("#FirstName").val();
 
-                $.ajax({
-                    type: 'post',
-                    url: '@this.Url.Action("AddComment","Home")',
-                    data: {ArticleId: articleId },                    
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8;'
+                    $.ajax({
+                        type: 'post',
+                        url: '@this.Url.Action("AddComment","Home")',
+                        data: {ArticleId: articleId },
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8;'
+                    });
                 });
             });
-        });
-    </script>
-}*@
+        </script>
+    }*@

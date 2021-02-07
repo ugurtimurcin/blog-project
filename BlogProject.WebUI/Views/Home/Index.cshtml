@@ -3,7 +3,7 @@
 @foreach (var article in Model)
 {
     <div class="card mb-4 my-4">
-        <img class="card-img-top" src="~/img/article-cover/@article.ImagePath" alt="Card image cap">
+        <img class="card-img-top" src="~/img/article-cover/@article.ImagePath" style="width:45rem; height: 25rem;" alt="Card image cap">
         <div class="card-body">
             <h2 class="card-title">@article.Title</h2>
             <div class="card-text">@Html.Raw(article.Content.Length>200 ? article.Content.Substring(0,200) + "..." : article.Content)</div>
