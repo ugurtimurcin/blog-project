@@ -1,12 +1,17 @@
 ﻿using BlogProject.Business.Abstract;
 using BlogProject.Business.Concrete;
+using BlogProject.Business.ValidationRules.FluentValidation;
 using BlogProject.Core.DataAccess;
 using BlogProject.Core.DataAccess.EntityFramework;
 using BlogProject.Core.Entities;
 using BlogProject.DataAccess.Abstract;
 using BlogProject.DataAccess.Concrete.Context;
 using BlogProject.DataAccess.Concrete.Repositories.EfRepositories;
+using BlogProject.DTO.Concrete.ArticleDTOs;
+using BlogProject.DTO.Concrete.CategoryDTOs;
+using BlogProject.DTO.Concrete.CommentDTOs;
 using BlogProject.Entities.Concrete;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +37,13 @@ namespace BlogProject.Business.Dependencies.MicrosoftIoC
 
             services.AddScoped<ICommentService, CommentManager>();
             services.AddScoped<ICommentDal, EfCommentRepository>();
+
+            services.AddTransient<IValidator<ArticleAddDto>, ArticleAddValidator>();
+            services.AddTransient<IValidator<ArticleEditDto>, ArticleEditValidator>();
+            services.AddTransient<IValidator<CategoryAddDto>, CategoryAddValidator>();
+            services.AddTransient<IValidator<CategoryEditDto>, CategoryEditValidator>();
+            services.AddTransient<IValidator<CommentAddDto>, CommentAddValidator>();
+
 
             services.AddDbContext<BlogContext>();
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<BlogContext>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
