@@ -1,5 +1,8 @@
 ﻿using BlogProject.Business.Abstract;
 using BlogProject.Business.Concrete;
+using BlogProject.Core.DataAccess;
+using BlogProject.Core.DataAccess.EntityFramework;
+using BlogProject.Core.Entities;
 using BlogProject.DataAccess.Abstract;
 using BlogProject.DataAccess.Concrete.Context;
 using BlogProject.DataAccess.Concrete.Repositories.EfRepositories;
@@ -19,11 +22,16 @@ namespace BlogProject.Business.Dependencies.MicrosoftIoC
     {
         public static void AddDependencies(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>));
+            services.AddScoped(typeof(IGenericDal<Article>), typeof(EfGenericRepository<Article, BlogContext>));
+            services.AddScoped(typeof(IGenericDal<Category>), typeof(EfGenericRepository<Category, BlogContext>));
+            services.AddScoped(typeof(IGenericDal<Comment>), typeof(EfGenericRepository<Comment, BlogContext>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
 
             services.AddScoped<IArticleService, ArticleManager>();
             services.AddScoped<IArticleDal, EfArticleRepository>();
+
+            services.AddScoped<ICommentService, CommentManager>();
+            services.AddScoped<ICommentDal, EfCommentRepository>();
 
             services.AddDbContext<BlogContext>();
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<BlogContext>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
