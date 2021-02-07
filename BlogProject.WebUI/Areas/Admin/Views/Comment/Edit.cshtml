@@ -1,0 +1,34 @@
+﻿@model CommentEditDto
+
+<h4 class="display-4 text-center my-4">Comment Detail</h4>
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>From:</th>
+        <td>@Model.Firstname @Model.Lastname</td>
+    </tr>
+
+    <tr>
+        <th>Content</th>
+        <td>@Model.Content</td>
+    </tr>
+
+    <tr>
+        <th>Article</th>
+        <td>
+            <a class="text-decoration-none" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@Model.Article.Id" title="Go to Article" target="_blank">@Model.Article.Title</a>
+        </td>
+    </tr>
+
+    <tr>
+        <th>Publish the comment</th>
+        <td>
+            <form method="post" asp-area="Admin" asp-controller="Comment" asp-action="Edit">
+                <div class="form-group form-check">
+                    <input type="checkbox" asp-for="IsActive" class="form-check-input" id="publish">
+                    <label class="form-check-label" for="publish">Tick for publishing the comment</label>
+                    <button class="btn btn-info">Save</button>
+                </div>
+            </form>
+        </td>
+    </tr>
+</table>

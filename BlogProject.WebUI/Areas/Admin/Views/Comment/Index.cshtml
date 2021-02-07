@@ -1,0 +1,108 @@
+﻿@model List<CommentListDto>
+
+<h4 class="display-4 text-center my-4">Articles</h4>
+
+@if (Model.Count > 0)
+{
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>From</th>
+                <th>Comment</th>
+                <th>Is Published?</th>
+                <th>Article</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model)
+            {
+                <tr>
+                    <td>@comment.Id</td>
+                    <td>@comment.Firstname @comment.Lastname</td>
+                    <td>@(comment.Content.Length>45 ? comment.Content.Substring(0,45) + "..." : comment.Content)</td>
+                    <td>
+                        @if (comment.IsActive == false)
+                        {
+                            <i class='fas fa-times-circle text-danger mr-3' title='Not Published'></i>
+                        }
+                        else
+                        {
+                            <i class='fas fa-check-circle text-success' title='Published'></i>
+                        }
+                    </td>
+
+                    <td>
+                        <a asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@comment.Article.Id" class="btn btn-link" target="_blank">
+                            @(comment.Article.Title.Length>35 ? comment.Article.Title.Substring(0,35) + "..." : comment.Article.Title)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.Raw(comment.IsActive == false ? $"<a href='./comment/edit/{comment.Id}' class='btn btn-sm btn-info btn-primary'>Publish</a>" : "")
+                        <a data-toggle="modal" data-target="#deleteScreen" data-deleted="@comment.Id" class="btn btn-sm btn-danger">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <div class="text-center">
+        <p class="text-muted">There is no comment yet.</p>
+    </div>
+}
+
+
+
+
+<!---DELETE MODAL-->
+<div class="modal fade" id="deleteScreen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-warning" id="exampleModalLabel">WARNING</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to delete the comment?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="btnDelete" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#deleteScreen').on('show.bs.modal', function (event) {
+                let actionElement = $(event.relatedTarget);
+                let id = actionElement.data('deleted');
+                $('#btnDelete').click(function () {
+                    $.ajax({
+                        type: 'Get',
+                        url: '@this.Url.Action("Delete", "Comment", new { area="Admin" })',
+                        data: { id: id },
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8;',
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}
