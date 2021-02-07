@@ -9,5 +9,7 @@ namespace BlogProject.Business.Abstract
 {
     public interface ICommentService : IGenericService<Comment>
     {
+        Task<List<Comment>> GetCommentsWithArticleAsync();
+        Task<Comment> GetCommentByIdWithArticleAsync(int id);
     }
 }

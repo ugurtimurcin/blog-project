@@ -1,4 +1,5 @@
-﻿using BlogProject.Entities.Concrete;
+﻿using BlogProject.Core.DataAccess;
+using BlogProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace BlogProject.DataAccess.Abstract
 {
     public interface ICommentDal : IGenericDal<Comment>
     {
+        Task<List<Comment>> GetCommentsWithArticleAsync();
+        Task<Comment> GetCommentByIdWithArticleAsync(int id);
     }
 }
