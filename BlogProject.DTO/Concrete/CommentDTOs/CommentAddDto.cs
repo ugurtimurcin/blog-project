@@ -1,4 +1,4 @@
-﻿using BlogProject.DTO.Abstract;
+﻿using BlogProject.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,6 @@ namespace BlogProject.DTO.Concrete.CommentDTOs
 {
     public class CommentAddDto : IDto
     {
-        public int Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Content { get; set; }
