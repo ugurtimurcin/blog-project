@@ -18,9 +18,11 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
     public class ProfileController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        public ProfileController(UserManager<AppUser> userManager)
+        private readonly SignInManager<AppUser> _signInManager;
+        public ProfileController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -91,6 +93,12 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
                 }
             }
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
     }
 }
