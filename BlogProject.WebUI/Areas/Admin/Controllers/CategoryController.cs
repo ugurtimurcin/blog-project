@@ -63,6 +63,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
                 await _genericService.UpdateAsync(category.Adapt<Category>());
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
             }
+            
             return View(category);
         }
 

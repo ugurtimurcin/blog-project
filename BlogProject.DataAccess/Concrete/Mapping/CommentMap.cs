@@ -16,8 +16,8 @@ namespace BlogProject.DataAccess.Concrete.Mapping
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
 
-            builder.Property(x => x.Firstname).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.Lastname).HasMaxLength(60).IsRequired();
+            builder.Property(x => x.Firstname).HasMaxLength(20).IsRequired();
+            builder.Property(x => x.Lastname).HasMaxLength(25).IsRequired();
             builder.Property(x => x.Content).HasColumnType("varchar(max)").IsRequired();
 
             builder.HasOne(x => x.Article).WithMany(x => x.Comments).HasForeignKey(x => x.ArticleId);

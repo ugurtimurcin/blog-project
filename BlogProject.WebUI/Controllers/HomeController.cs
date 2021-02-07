@@ -37,7 +37,10 @@ namespace BlogProject.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddComment(CommentAddDto model)
         {
-            await _genericService.AddAsync(model.Adapt<Comment>());
+            if (ModelState.IsValid)
+            {
+                await _genericService.AddAsync(model.Adapt<Comment>());
+            }
             return RedirectToAction("Detail","Home",new { id = model.ArticleId });
         }
     }

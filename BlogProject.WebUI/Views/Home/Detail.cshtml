@@ -65,24 +65,8 @@
     }
 }
 
-@*@section Scripts{
-        <script type="text/javascript">
-            $(document).ready(function () {
 
-                var articleId = @ViewBag.Article.Id;
-                console.log(articleId);
-
-                $('#btnSubmit').click(function () {
-                        var firstName = $("#FirstName").val();
-
-                    $.ajax({
-                        type: 'post',
-                        url: '@this.Url.Action("AddComment","Home")',
-                        data: {ArticleId: articleId },
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8;'
-                    });
-                });
-            });
-        </script>
-    }*@
+@section Scripts{
+    <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

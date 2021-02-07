@@ -61,11 +61,14 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
             user.Email = appUser.Email;
             user.ProfilPicture = user.ProfilPicture;
 
-            var result = await _userManager.UpdateAsync(user);
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                TempData["Success"] = "Your profile has updated!";
-                return RedirectToAction("Index", "Profile", new { area = "Admin" });
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    TempData["Success"] = "Your profile has updated!";
+                    return RedirectToAction("Index", "Profile", new { area = "Admin" });
+                }
             }
 
             return View(appUser);
