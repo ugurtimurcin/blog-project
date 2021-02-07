@@ -1,4 +1,4 @@
-﻿using BlogProject.DTO.Abstract;
+﻿using BlogProject.Core.Entities;
 using BlogProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;

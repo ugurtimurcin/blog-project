@@ -1,4 +1,5 @@
-﻿using BlogProject.Entities.Concrete;
+﻿using BlogProject.Core.DataAccess;
+using BlogProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
