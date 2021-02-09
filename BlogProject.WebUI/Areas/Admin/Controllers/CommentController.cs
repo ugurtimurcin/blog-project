@@ -24,12 +24,14 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            TempData["Active"] = "comment";
             var comments = await _commentService.GetCommentsWithArticleAsync();
             return View(comments.Adapt<List<CommentListDto>>());
         }
 
         public async Task<IActionResult> Edit(int id)
         {
+            TempData["Active"] = "comment";
             var comment = await _commentService.GetCommentByIdWithArticleAsync(id);
             return View(comment.Adapt<CommentEditDto>());
         }
