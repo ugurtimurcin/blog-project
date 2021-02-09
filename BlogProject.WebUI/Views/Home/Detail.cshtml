@@ -32,18 +32,22 @@
     <h5 class="card-header">Leave a Comment:</h5>
     <div class="card-body">
         <form id="commentForm" asp-controller="Home" asp-action="AddComment" method="post">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
             <input type="hidden" asp-for="ArticleId" value="@ViewBag.Article.Id" />
             <div class="form-group row">
                 <div class="col-sm-6">
                     <input class="form-control" asp-for="Firstname" placeholder="First Name" />
+                    <span asp-validation-for="Firstname" class="text-danger"></span>
                 </div>
                 <div class="col-sm-6">
                     <input class="form-control" asp-for="Lastname" placeholder="Last Name" />
+                    <span asp-validation-for="Lastname" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="form-group">
                 <textarea class="form-control" rows="3" asp-for="Content"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
         </form>
