@@ -25,17 +25,10 @@ namespace BlogProject.Core.DataAccess.EntityFramework
             await Task.FromResult(context.Set<TEntity>().Remove(entity));
             await context.SaveChangesAsync();
         }
-
-        public async Task<List<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, int>> predicate = null)
         {
             using var context = new TContext();
-            return await context.Set<TEntity>().ToListAsync();
-        }
-
-        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, int>>predicate)
-        {
-            using var context = new TContext();
-            return await context.Set<TEntity>().OrderByDescending(predicate).ToListAsync();
+            return predicate == null ? await context.Set<TEntity>().OrderByDescending(predicate).ToListAsync() : await context.Set<TEntity>().ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(int id)
