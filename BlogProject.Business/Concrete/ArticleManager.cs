@@ -1,5 +1,7 @@
 ﻿using BlogProject.Business.Abstract;
 using BlogProject.Core.DataAccess;
+using BlogProject.Core.Utilities.Results.Abstract;
+using BlogProject.Core.Utilities.Results.Concrete;
 using BlogProject.DataAccess.Abstract;
 using BlogProject.Entities.Concrete;
 using System;
@@ -10,19 +12,45 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Business.Concrete
 {
-    public class ArticleManager : GenericManager<Article>, IArticleService
+    public class ArticleManager : IArticleService
     {
-        private readonly IGenericDal<Article> _genericDal;
         private readonly IArticleDal _articleDal;
-        public ArticleManager(IGenericDal<Article> genericDal, IArticleDal articleDal) : base(genericDal)
+        public ArticleManager(IArticleDal articleDal)
         {
-            _genericDal = genericDal;
             _articleDal = articleDal;
         }
 
-        public async Task<Article> GetArticleWithCommentsByIdAsync(int id)
+        public async Task<IResult> AddAsync(Article entity)
         {
-            return await _articleDal.GetArticleWithCommentsByIdAsync(id);
+            await _articleDal.AddAsync(entity);
+            return new SuccessResult();
+        }
+
+        public async Task<IResult> DeleteAsync(Article entity)
+        {
+            await _articleDal.DeleteAsync(entity);
+            return new SuccessResult();
+        }
+
+        public async Task<IDataResult<List<Article>>> GetAllAsync()
+        {
+            return new SuccessDataResult<List<Article>>(await _articleDal.GetAllAsync(x=>x.Id));
+        }
+
+        public async Task<IDataResult<Article>> GetArticleWithCommentsByIdAsync(int id)
+        {
+            return new SuccessDataResult<Article>(await _articleDal.GetArticleWithCommentsByIdAsync(id));
+        }
+
+        public async Task<IDataResult<Article>> GetByIdAsync(int id)
+        {
+            return new SuccessDataResult<Article>(await _articleDal.GetByIdAsync(id));
+        }
+
+        public async Task<IResult> UpdateAsync(Article entity)
+        {
+            await _articleDal.UpdateAsync(entity);
+            return new SuccessResult();
         }
     }
 }

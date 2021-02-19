@@ -1,5 +1,7 @@
 ﻿using BlogProject.Business.Abstract;
 using BlogProject.Core.DataAccess;
+using BlogProject.Core.Utilities.Results.Abstract;
+using BlogProject.Core.Utilities.Results.Concrete;
 using BlogProject.DataAccess.Abstract;
 using BlogProject.Entities.Concrete;
 using System;
@@ -10,24 +12,50 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Business.Concrete
 {
-    public class CommentManager : GenericManager<Comment>, ICommentService
+    public class CommentManager : ICommentService
     {
-        private readonly IGenericDal<Comment> _genericDal;
         private readonly ICommentDal _commentDal;
-        public CommentManager(IGenericDal<Comment> genericDal, ICommentDal commentDal) : base(genericDal)
+        public CommentManager(ICommentDal commentDal)
         {
-            _genericDal = genericDal;
             _commentDal = commentDal;
         }
 
-        public async Task<Comment> GetCommentByIdWithArticleAsync(int id)
+        public async Task<IResult> AddAsync(Comment entity)
         {
-            return await _commentDal.GetCommentByIdWithArticleAsync(id);
+            await _commentDal.AddAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task<List<Comment>> GetCommentsWithArticleAsync()
+        public async Task<IResult> DeleteAsync(Comment entity)
         {
-            return await _commentDal.GetCommentsWithArticleAsync();
+            await _commentDal.DeleteAsync(entity);
+            return new SuccessResult();
+        }
+
+        public async Task<IDataResult<List<Comment>>> GetAllAsync()
+        {
+            return new SuccessDataResult<List<Comment>>(await _commentDal.GetAllAsync());
+        }
+
+        public async Task<IDataResult<Comment>> GetByIdAsync(int id)
+        {
+            return new SuccessDataResult<Comment>(await _commentDal.GetByIdAsync(id));
+        }
+
+        public async Task<IDataResult<Comment>> GetCommentByIdWithArticleAsync(int id)
+        {
+            return new SuccessDataResult<Comment>(await _commentDal.GetCommentByIdWithArticleAsync(id));
+        }
+
+        public async Task<IDataResult<List<Comment>>> GetCommentsWithArticleAsync()
+        {
+            return new SuccessDataResult<List<Comment>>(await _commentDal.GetCommentsWithArticleAsync());
+        }
+
+        public async Task<IResult> UpdateAsync(Comment entity)
+        {
+            await _commentDal.UpdateAsync(entity);
+            return new SuccessResult();
         }
     }
 }
