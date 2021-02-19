@@ -1,4 +1,5 @@
-﻿using BlogProject.Entities.Concrete;
+﻿using BlogProject.Core.Utilities.Results.Abstract;
+using BlogProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BlogProject.Business.Abstract
 {
     public interface ICommentService : IGenericService<Comment>
     {
-        Task<List<Comment>> GetCommentsWithArticleAsync();
-        Task<Comment> GetCommentByIdWithArticleAsync(int id);
+        Task<IDataResult<List<Comment>>> GetCommentsWithArticleAsync();
+        Task<IDataResult<Comment>> GetCommentByIdWithArticleAsync(int id);
     }
 }

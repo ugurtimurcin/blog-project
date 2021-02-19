@@ -1,4 +1,5 @@
 ﻿using BlogProject.Core.Entities;
+using BlogProject.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,10 @@ namespace BlogProject.Business.Abstract
 {
     public interface IGenericService<TEntity> where TEntity : class, ITable, new()
     {
-        Task<TEntity> GetByIdAsync(int id);
-        Task<List<TEntity>> GetAllAsync();
-        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, int>> predicate);
-        Task AddAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
+        Task<IDataResult<TEntity>> GetByIdAsync(int id);
+        Task<IDataResult<List<TEntity>>> GetAllAsync();
+        Task<IResult> AddAsync(TEntity entity);
+        Task<IResult> UpdateAsync(TEntity entity);
+        Task<IResult> DeleteAsync(TEntity entity);
     }
 }

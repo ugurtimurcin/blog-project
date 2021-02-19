@@ -1,4 +1,5 @@
-﻿using BlogProject.Entities.Concrete;
+﻿using BlogProject.Core.Utilities.Results.Abstract;
+using BlogProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace BlogProject.Business.Abstract
 {
     public interface IArticleService : IGenericService<Article>
     {
-        Task<Article> GetArticleWithCommentsByIdAsync(int id);
+        Task<IDataResult<Article>> GetArticleWithCommentsByIdAsync(int id);
     }
 }
