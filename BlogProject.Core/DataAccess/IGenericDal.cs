@@ -11,8 +11,7 @@ namespace BlogProject.Core.DataAccess
     public interface IGenericDal<TEntity> where TEntity : class, ITable, new()
     {
         Task<TEntity> GetByIdAsync(int id);
-        Task<List<TEntity>> GetAllAsync();
-        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, int>>predicate);
+        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, int>> predicate = null);
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
