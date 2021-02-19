@@ -22,8 +22,12 @@ namespace BlogProject.WebUI.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var articles = await _articleService.GetAllAsync(x => x.Id);
-            return View(articles.Adapt<List<ArticleListDto>>());
+            var result = await _articleService.GetAllAsync();
+            if (result.Success)
+            {
+                return View(result.Data.Adapt<List<ArticleListDto>>());
+            }
+            return View();
         }
 
         public async Task<IActionResult> Detail(int id)

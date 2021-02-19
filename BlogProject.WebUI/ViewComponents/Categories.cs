@@ -12,15 +12,19 @@ namespace BlogProject.WebUI.ViewComponents
 {
     public class Categories : ViewComponent
     {
-        private readonly IGenericService<Category> _genericService;
-        public Categories(IGenericService<Category> genericService)
+        private readonly ICategoryService _categoryService;
+        public Categories(ICategoryService categoryService)
         {
-            _genericService = genericService;
+            _categoryService = categoryService;
         }
         public IViewComponentResult Invoke()
         {
-            var categories = _genericService.GetAllAsync(x => x.Id).Result;
-            return View(categories.Adapt<List<CategoryListDto>>());
+            var result = _categoryService.GetAllAsync().Result;
+            if (result.Success)
+            {
+                result.Data.Adapt<List<CategoryListDto>>();
+            }
+            return View();
         }
     }
 }

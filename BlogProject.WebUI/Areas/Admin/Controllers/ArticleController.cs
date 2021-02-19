@@ -19,18 +19,18 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class ArticleController : Controller
     {
-        private readonly IGenericService<Article> _genericService;
-        private readonly IGenericService<Category> _categoryService;
-        public ArticleController(IGenericService<Article> genericService, IGenericService<Category> categoryService)
+        private readonly IArticleService _articleService;
+        private readonly ICategoryService _categoryService;
+        public ArticleController(IArticleService articleService, ICategoryService categoryService)
         {
-            _genericService = genericService;
+            _articleService = articleService;
             _categoryService = categoryService;
         }
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "article";
-            var articles = await _genericService.GetAllAsync(x=>x.Id);
-            return View(articles.Adapt<List<ArticleListDto>>());
+            var result = await _articleService.GetAllAsync();
+            return View(result.Data.Adapt<List<ArticleListDto>>());
         }
 
         public IActionResult Add()
@@ -64,7 +64,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
                     Url = Guid.NewGuid().ToString()
 
                 };
-                await _genericService.AddAsync(article);
+                await _articleService.AddAsync(article);
                 return RedirectToAction("Index", "Article", new { area = "Admin" });
             }
             return View();
@@ -72,7 +72,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var article = await _genericService.GetByIdAsync(id);
+            var article = await _articleService.GetByIdAsync(id);
             ViewBag.Categories = new SelectList(_categoryService.GetAllAsync().Result.Adapt<List<CategoryListDto>>(), "Id", "Name");
             return View(article.Adapt<ArticleEditDto>());
         }
@@ -80,7 +80,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ArticleEditDto article, IFormFile pic)
         {
-            var updatedArticle = await _genericService.GetByIdAsync(article.Id);
+            var updatedArticle = await _articleService.GetByIdAsync(article.Id);
             if (pic != null)
             {
                 var picName = Guid.NewGuid() + Path.GetExtension(pic.FileName);
@@ -88,15 +88,15 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
                 using var stream = new FileStream(path, FileMode.Create);
                 await pic.CopyToAsync(stream);
 
-                updatedArticle.ImagePath = picName;
+                updatedArticle.Data.ImagePath = picName;
             }
             if (ModelState.IsValid)
             {
-                updatedArticle.Title = article.Title;
-                updatedArticle.Content = article.Content;
-                updatedArticle.CategoryId = article.CategoryId;
+                updatedArticle.Data.Title = article.Title;
+                updatedArticle.Data.Content = article.Content;
+                updatedArticle.Data.CategoryId = article.CategoryId;
 
-                await _genericService.UpdateAsync(updatedArticle);
+                await _articleService.UpdateAsync(updatedArticle.Data);
                 return RedirectToAction("Index", "Article", new { area = "Admin" });
             }
 
@@ -105,7 +105,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await _genericService.DeleteAsync(await _genericService.GetByIdAsync(id));
+            await _articleService.DeleteAsync(new Article { Id = id });
             return RedirectToAction("Index", "Article", new { area = "Admin" });
         }
     }
