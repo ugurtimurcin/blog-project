@@ -22,7 +22,7 @@ namespace BlogProject.WebUI.ViewComponents
             var result = _categoryService.GetAllAsync().Result;
             if (result.Success)
             {
-                result.Data.Adapt<List<CategoryListDto>>();
+                return View(result.Data.Adapt<List<CategoryListDto>>());
             }
             return View();
         }
