@@ -13,11 +13,11 @@ namespace BlogProject.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IGenericService<Comment> _genericService;
+        private readonly ICommentService _commentService;
         private readonly IArticleService _articleService;
-        public HomeController(IGenericService<Comment> genericService, IArticleService articleService)
+        public HomeController(ICommentService commentService, IArticleService articleService)
         {
-            _genericService = genericService;
+            _commentService = commentService;
             _articleService = articleService;
         }
         public async Task<IActionResult> Index()
@@ -32,8 +32,8 @@ namespace BlogProject.WebUI.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-            ViewBag.Article = await _articleService.GetArticleWithCommentsByIdAsync(id);
-           
+            var result = await _articleService.GetArticleWithCommentsByIdAsync(id);
+            ViewBag.Article = result.Data;
             return View();
         }
 
@@ -43,7 +43,7 @@ namespace BlogProject.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _genericService.AddAsync(model.Adapt<Comment>());
+                await _commentService.AddAsync(model.Adapt<Comment>());
             }
             return RedirectToAction("Detail","Home",new { id = model.ArticleId });
         }
