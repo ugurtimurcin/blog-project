@@ -15,16 +15,16 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly IGenericService<Category> _genericService;
-        public CategoryController(IGenericService<Category> genericService)
+        private readonly ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
         {
-            _genericService = genericService;
+            _categoryService = categoryService;
         }
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "category";
-            var categories = await _genericService.GetAllAsync();
-            return View(categories.Adapt<List<CategoryListDto>>());
+            var result = await _categoryService.GetAllAsync();
+            return View(result.Data.Adapt<List<CategoryListDto>>());
         }
 
         public IActionResult Add()
@@ -38,7 +38,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _genericService.AddAsync(category.Adapt<Category>());
+                await _categoryService.AddAsync(category.Adapt<Category>());
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
             }
             return View(category);
@@ -47,10 +47,10 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             TempData["Active"] = "category";
-            var category = await _genericService.GetByIdAsync(id);
-            if (category != null)
+            var category = await _categoryService.GetByIdAsync(id);
+            if (category.Success)
             {
-                return View(category.Adapt<CategoryEditDto>());
+                return View(category.Data.Adapt<CategoryEditDto>());
             }
             return View();
         }
@@ -60,7 +60,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _genericService.UpdateAsync(category.Adapt<Category>());
+                await _categoryService.UpdateAsync(category.Adapt<Category>());
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
             }
             
@@ -69,7 +69,7 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await _genericService.DeleteAsync( await _genericService.GetByIdAsync(id));
+            await _categoryService.DeleteAsync(new Category { Id = id });
             return RedirectToAction("Index", "Category", new { area = "Admin" });
         }
     }
