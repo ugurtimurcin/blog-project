@@ -16,11 +16,9 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
     public class CommentController : Controller
     {
         private readonly ICommentService _commentService;
-        private readonly IGenericService<Comment> _genericService;
-        public CommentController(ICommentService commentService, IGenericService<Comment> genericService)
+        public CommentController(ICommentService commentService)
         {
             _commentService = commentService;
-            _genericService = genericService;
         }
         public async Task<IActionResult> Index()
         {
@@ -39,8 +37,8 @@ namespace BlogProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(CommentEditDto dto)
         {
             var comment =await _commentService.GetByIdAsync(dto.Id);
-            comment.IsActive = true;
-            await _commentService.UpdateAsync(comment);
+            comment.Data.IsActive = true;
+            await _commentService.UpdateAsync(comment.Data);
             return RedirectToAction("Index", "Comment", new { area = "Admin" });
         }
 
