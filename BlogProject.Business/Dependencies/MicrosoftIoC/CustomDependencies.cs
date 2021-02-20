@@ -27,13 +27,12 @@ namespace BlogProject.Business.Dependencies.MicrosoftIoC
     {
         public static void AddDependencies(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IGenericDal<Article>), typeof(EfGenericRepository<Article, BlogContext>));
-            services.AddScoped(typeof(IGenericDal<Category>), typeof(EfGenericRepository<Category, BlogContext>));
-            services.AddScoped(typeof(IGenericDal<Comment>), typeof(EfGenericRepository<Comment, BlogContext>));
-            services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
 
             services.AddScoped<IArticleService, ArticleManager>();
             services.AddScoped<IArticleDal, EfArticleRepository>();
+
+            services.AddScoped<ICategoryService, CategoryManager>();
+            services.AddScoped<ICategoryDal, EfCategoryRepository>();
 
             services.AddScoped<ICommentService, CommentManager>();
             services.AddScoped<ICommentDal, EfCommentRepository>();
